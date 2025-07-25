@@ -58,7 +58,7 @@ jobs:
           fail-on-error: true
 
       - name: Pack project
-        run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release -o ./nuget-packages -p:Version=1.0.0.${{ github.run_id }}
+        run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release -o ./nuget-packages -p:Version=1.0.0.${{ github.run_number }}
 
       - name: Publish to NuGet
         run: dotnet nuget push "./nuget-packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
