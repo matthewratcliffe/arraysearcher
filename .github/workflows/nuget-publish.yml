@@ -24,15 +24,15 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ArraySearch/ArraySearch.csproj
 
+    - name: Copy README.md to project folder
+      run: cp README.md ArraySearch/README.md
+      
     - name: Build project
       run: dotnet build ArraySearch/ArraySearch.csproj --configuration Release --no-restore
 
     - name: Test project
       if: success()
       run: dotnet test Tests/Tests.csproj --no-build --verbosity normal
-
-    - name: Copy README.md to project folder
-      run: cp README.md ArraySearch/README.md
       
     - name: Pack project
       run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release --no-build -o ./nuget-packages
