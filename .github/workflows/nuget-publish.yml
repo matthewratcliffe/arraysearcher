@@ -33,10 +33,6 @@ jobs:
 
     - name: Pack project
       run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release --no-build -o ./nuget-packages
-
+      
     - name: Publish to NuGet
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
-        PROJECT_FILE_PATH: ArraySearch/ArraySearch.csproj
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push "./nuget-packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
