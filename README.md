@@ -1,5 +1,8 @@
 # Array Search
 
+[![Build and Publish](https://github.com/matthewratcliffe/arraysearcher/actions/workflows/nuget-publish.yml/badge.svg)](https://github.com/matthewratcliffe/arraysearcher/actions/workflows/nuget-publish.yml)
+[![NuGet Version](https://img.shields.io/nuget/v/ArraySearch)](https://www.nuget.org/packages/ArraySearch)
+
 ## Overview
 
 This project is designed to implement various string comparison and normalization algorithms. It includes functionalities such as phonetic encoding, similarity scoring, transliteration detection, and more. The primary focus is on handling names with different linguistic characteristics, including Arabic and Hispanic name patterns.
