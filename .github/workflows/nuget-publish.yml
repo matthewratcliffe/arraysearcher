@@ -25,11 +25,10 @@ jobs:
       run: dotnet restore ArraySearch/ArraySearch.csproj
 
     - name: Copy README.md to project folder
-      run: cp README.md ArraySearch/README.md
+      run: cp README.md ArraySearch/README.md && ls ArraySearch/
       
     - name: Build project
       run: dotnet build ArraySearch/ArraySearch.csproj --configuration Release --no-restore
-
 
     - name: Run Tests and Collect Results
       run: |
