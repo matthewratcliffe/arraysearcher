@@ -37,6 +37,6 @@ jobs:
     - name: Publish to NuGet
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-        PROJECT_FILE_PATH: ArraySearch.csproj
+        PROJECT_FILE_PATH: ArraySearch/ArraySearch.csproj
         VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
