@@ -11,54 +11,54 @@ permissions:
   contents: read
   checks: write
   pull-requests: write
-  
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '9.0.x'
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore ArraySearch/ArraySearch.csproj
+      - name: Restore dependencies
+        run: dotnet restore ArraySearch/ArraySearch.csproj
 
-    - name: Copy README.md to project folder
-      run: cp README.md ArraySearch/README.md && ls ArraySearch/
-      
-    - name: Build project
-      run: dotnet build ArraySearch/ArraySearch.csproj --configuration Release --no-restore
+      - name: Copy README.md to project folder
+        run: cp README.md ArraySearch/README.md && ls ArraySearch/
 
-    - name: Run Tests and Collect Results
-      run: |
-        mkdir -p TestResults
-        dotnet test Tests/Tests.csproj \
-          --configuration Release \
-          --logger "trx;LogFileName=test_results.trx" \
-          --results-directory TestResults
+      - name: Build project
+        run: dotnet build ArraySearch/ArraySearch.csproj --configuration Release --no-restore
 
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: TestResults
+      - name: Run Tests and Collect Results
+        run: |
+          mkdir -p TestResults
+          dotnet test Tests/Tests.csproj \
+            --configuration Release \
+            --logger "trx;LogFileName=test_results.trx" \
+            --results-directory TestResults
 
-    - name: Publish Test Report to GitHub UI
-      uses: dorny/test-reporter@v1
-      with:
-        name: Unit Tests
-        path: TestResults/test_results.trx
-        reporter: dotnet-trx
-        fail-on-error: true
-      
-    - name: Pack project
-      run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release -o ./nuget-packages
-      
-    - name: Publish to NuGet
-      run: dotnet nuget push "./nuget-packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+
+      - name: Publish Test Report to GitHub UI
+        uses: dorny/test-reporter@v1
+        with:
+          name: Unit Tests
+          path: TestResults/test_results.trx
+          reporter: dotnet-trx
+          fail-on-error: true
+
+      - name: Pack project
+        run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release -o ./nuget-packages -p:Version=1.0.0.${{ github.run_id }}
+
+      - name: Publish to NuGet
+        run: dotnet nuget push "./nuget-packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
