@@ -1,8 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <PackageId>ArraySearch</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Matt Ratcliffe</Authors>
+        <Product>ArraySearch</Product>
+        <Description>Search array via string comparison and normalization algorithms.</Description>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>ArraySearch</RootNamespace>
     </PropertyGroup>
 </Project>
