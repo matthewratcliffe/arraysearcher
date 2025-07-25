@@ -27,33 +27,16 @@ jobs:
     - name: Build project
       run: dotnet build ArraySearch/ArraySearch.csproj --configuration Release --no-restore
 
-    - name: Test project (if tests exist)
+    - name: Test project
       if: success()
-      run: dotnet test ArraySearch/ArraySearch.csproj --no-build --verbosity normal
+      run: dotnet test Tests/Tests.csproj --no-build --verbosity normal
 
-  publish-nuget:
-    runs-on: ubuntu-latest
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Pack project
+      run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release --no-build -o ./nuget-packages
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '9.0.x'
-          
-      - name: Restore dependencies
-        run: dotnet restore ArraySearch/ArraySearch.csproj
-        
-      - name: Pack project
-        run: dotnet pack ArraySearch/ArraySearch.csproj --configuration Release --no-build -o ./nuget-packages
-
-      - name: Publish to NuGet
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: brandedoutcast/publish-nuget@v2.5.2
-        with:
-          PROJECT_FILE_PATH: ArraySearch.csproj
-          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-          NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish to NuGet
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+        PROJECT_FILE_PATH: ArraySearch.csproj
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
