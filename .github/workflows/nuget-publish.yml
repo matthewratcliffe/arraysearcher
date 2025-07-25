@@ -34,7 +34,6 @@ jobs:
       run: |
         mkdir -p TestResults
         dotnet test Tests/Tests.csproj \
-          --no-build \
           --configuration Release \
           --logger "trx;LogFileName=test_results.trx" \
           --results-directory TestResults
