@@ -6,7 +6,6 @@
         <Authors>Matt Ratcliffe</Authors>
         <Product>ArraySearch</Product>
         <Description>Search array via string comparison and normalization algorithms.</Description>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>ArraySearch</RootNamespace>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
